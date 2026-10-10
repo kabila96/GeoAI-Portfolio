@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Powell Andile Ndlovu | GeoAI & Environmental Data Analyst</title>
+  <link rel="icon" href="powell.jpg">
   <meta name="description" content="Professional GeoAI, GIS, Remote Sensing, and Machine Learning portfolio for Powell Andile Ndlovu." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -743,14 +744,380 @@
         align-items: flex-start;
       }
     }
+    /* =====================================================================
+       GeoAI ASSISTANT — embedded chat (all classes prefixed "pa-")
+       Uses the page's own theme variables, so light/dark mode just works.
+       ===================================================================== */
+    :root {
+      --pa-grad: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      --pa-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    /* --- Round photo logo in the header (radar-ring style, matches the AI button) --- */
+    .brand.brand-with-logo { flex-direction: row; align-items: center; gap: 14px; }
+    .brand-with-logo .brand-text { display: flex; flex-direction: column; gap: 2px; font-size: inherit; color: inherit; }
+    .brand-with-logo .brand-text > span { font-size: 0.84rem; color: var(--muted); }
+    .brand-logo {
+      position: relative; flex: none;
+      width: 52px; height: 52px; border-radius: 50%; padding: 3px;
+      background: var(--pa-grad);
+      box-shadow: 0 10px 26px color-mix(in srgb, var(--primary) 35%, transparent);
+      transition: transform .3s ease;
+    }
+    .brand-logo::before,
+    .brand-logo::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid var(--accent); opacity: 0; pointer-events: none;
+      animation: pa-ring 4s ease-out infinite;
+    }
+    .brand-logo::after { animation-delay: 2s; }
+    .brand-logo img,
+    .brand-logo .brand-initials {
+      position: absolute; inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px);
+      border-radius: 50%; border: 2px solid var(--surface-strong);
+    }
+    .brand-logo img { object-fit: cover; object-position: center 25%; background: var(--surface-strong); }
+    .brand-logo .brand-initials {
+      display: grid; place-items: center; background: var(--surface-strong);
+      font-size: 1rem; font-weight: 800; letter-spacing: -.02em; color: var(--primary);
+    }
+    .brand-with-logo:hover .brand-logo { transform: rotate(-6deg) scale(1.05); }
+    @media (max-width: 560px) {
+      .brand-logo { width: 44px; height: 44px; }
+      .brand-with-logo { gap: 10px; }
+      .brand-with-logo .brand-text > span { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .brand-logo::before, .brand-logo::after { animation: none; } }
+
+    /* --- Hero / nav entry points --- */
+    .nav-links a.pa-nav-ai {
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-links a.pa-nav-ai::before {
+      content: "";
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+      animation: pa-ping 2.2s ease-out infinite;
+    }
+    .btn-ai {
+      background: var(--pa-grad);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-ai::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+      transform: translateX(-120%);
+      animation: pa-sheen 4.5s ease-in-out infinite;
+    }
+    .pa-kbd {
+      font: 600 .72rem var(--pa-mono);
+      padding: 2px 6px; border-radius: 6px;
+      background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.35);
+    }
+
+    /* --- "Ask AI" pill on every project card --- */
+    .pa-card-ask {
+      position: absolute; top: 14px; right: 14px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,.5);
+      background: rgba(8, 16, 29, .55); color: #fff;
+      font: 700 .78rem 'Inter', sans-serif; cursor: pointer;
+      backdrop-filter: blur(8px);
+      opacity: 0; transform: translateY(-6px);
+      transition: opacity .25s ease, transform .25s ease, background .2s ease;
+    }
+    .project-card:hover .pa-card-ask,
+    .project-card:focus-within .pa-card-ask { opacity: 1; transform: none; }
+    .pa-card-ask:hover { background: var(--primary); border-color: transparent; }
+    @media (hover: none) { .pa-card-ask { opacity: 1; transform: none; } }
+
+    /* --- Floating launcher: a radar beacon --- */
+    .pa-launcher {
+      position: fixed; right: 24px; bottom: 24px; z-index: 1200;
+      width: 66px; height: 66px; border-radius: 50%; border: 0; cursor: pointer;
+      background: var(--pa-grad); color: #fff;
+      box-shadow: 0 16px 40px color-mix(in srgb, var(--primary) 45%, transparent);
+      display: grid; place-items: center;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .pa-launcher:hover { transform: translateY(-3px) scale(1.04); }
+    .pa-launcher svg { width: 34px; height: 34px; }
+    .pa-launcher .pa-sweep { transform-origin: 50% 50%; animation: pa-spin 3.2s linear infinite; }
+    .pa-launcher::before,
+    .pa-launcher::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid var(--accent); opacity: 0;
+      animation: pa-ring 3s ease-out infinite;
+    }
+    .pa-launcher::after { animation-delay: 1.5s; }
+    .pa-launcher[aria-expanded="true"] { transform: scale(.88); }
+    .pa-launcher[aria-expanded="true"]::before,
+    .pa-launcher[aria-expanded="true"]::after { animation: none; }
+    .pa-launcher-badge {
+      position: absolute; top: -4px; right: -4px;
+      font: 800 .62rem 'Inter', sans-serif; letter-spacing: .06em;
+      padding: 3px 6px; border-radius: 999px;
+      background: var(--surface-strong); color: var(--primary);
+      border: 1px solid var(--line);
+    }
+
+    .pa-teaser {
+      position: fixed; right: 102px; bottom: 36px; z-index: 1200;
+      max-width: 250px; padding: 12px 34px 12px 14px; border-radius: 16px 16px 4px 16px;
+      background: var(--surface-strong); color: var(--text);
+      border: 1px solid var(--line); box-shadow: var(--shadow);
+      font-size: .9rem; line-height: 1.45; cursor: pointer;
+      opacity: 0; transform: translateX(10px); pointer-events: none;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .pa-teaser.pa-show { opacity: 1; transform: none; pointer-events: auto; }
+    .pa-teaser strong { color: var(--primary); }
+    .pa-teaser-x {
+      position: absolute; top: 6px; right: 8px; border: 0; background: none;
+      color: var(--muted); cursor: pointer; font-size: 1rem; line-height: 1;
+    }
+
+    /* --- Selection-to-ask bubble --- */
+    .pa-select-ask {
+      position: absolute; z-index: 1300;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 12px; border-radius: 999px; border: 0; cursor: pointer;
+      background: var(--text); color: var(--bg);
+      font: 700 .8rem 'Inter', sans-serif;
+      box-shadow: var(--shadow-soft);
+      transform: translate(-50%, -100%);
+      animation: pa-pop .18s ease-out;
+    }
+    .pa-select-ask::after {
+      content: ""; position: absolute; left: 50%; bottom: -5px; margin-left: -5px;
+      border: 5px solid transparent; border-bottom: 0; border-top-color: var(--text);
+    }
+
+    /* --- Panel --- */
+    .pa-panel {
+      position: fixed; right: 24px; bottom: 104px; z-index: 1201;
+      width: min(410px, calc(100vw - 32px)); height: min(640px, calc(100vh - 140px));
+      display: flex; flex-direction: column; overflow: hidden;
+      background: var(--surface-strong); color: var(--text);
+      border: 1px solid var(--line); border-radius: 26px;
+      box-shadow: 0 30px 80px rgba(2, 8, 20, .28);
+      backdrop-filter: blur(18px);
+      transform-origin: calc(100% - 33px) calc(100% + 47px);
+      opacity: 0; transform: scale(.6); pointer-events: none; visibility: hidden;
+      transition: opacity .28s ease, transform .32s cubic-bezier(.2,.9,.3,1.2), visibility 0s .32s,
+                  width .3s ease, height .3s ease;
+    }
+    .pa-panel.pa-open { opacity: 1; transform: none; pointer-events: auto; visibility: visible; transition-delay: 0s; }
+    .pa-panel.pa-wide { width: min(760px, calc(100vw - 48px)); height: calc(100vh - 140px); }
+
+    .pa-head {
+      position: relative; padding: 18px 18px 14px; color: #fff;
+      background: var(--pa-grad); overflow: hidden; flex: none;
+    }
+    .pa-contours { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .28; pointer-events: none; }
+    .pa-contours path { animation: pa-drift 14s ease-in-out infinite alternate; }
+    .pa-contours path:nth-child(2n) { animation-duration: 18s; }
+    .pa-head-row { position: relative; display: flex; align-items: center; gap: 12px; }
+    .pa-avatar {
+      width: 42px; height: 42px; flex: none; border-radius: 14px;
+      background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.35);
+      display: grid; place-items: center;
+    }
+    .pa-avatar svg { width: 26px; height: 26px; }
+    .pa-avatar { position: relative; border-radius: 50%; overflow: hidden; }
+    .pa-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 25%; z-index: 1; }
+    .pa-title { flex: 1; min-width: 0; }
+    .pa-title strong { display: block; font-size: 1rem; font-weight: 800; letter-spacing: -.01em; }
+    .pa-status { display: flex; align-items: center; gap: 6px; font: 500 .74rem var(--pa-mono); opacity: .92; }
+    .pa-status i { width: 7px; height: 7px; border-radius: 50%; background: #fbbf24; }
+    .pa-status[data-state="online"] i { background: #4ade80; box-shadow: 0 0 0 3px rgba(74,222,128,.25); }
+    .pa-status[data-state="waking"] i { animation: pa-blink 1s infinite; }
+    .pa-status[data-state="offline"] i { background: #f87171; }
+    .pa-icon-btn {
+      width: 34px; height: 34px; border-radius: 10px; border: 1px solid rgba(255,255,255,.3);
+      background: rgba(255,255,255,.12); color: #fff; cursor: pointer;
+      display: grid; place-items: center; transition: background .2s ease;
+    }
+    .pa-icon-btn:hover { background: rgba(255,255,255,.26); }
+    .pa-icon-btn svg { width: 16px; height: 16px; }
+    .pa-hud {
+      position: relative; margin-top: 12px; display: flex; justify-content: space-between;
+      font: 500 .68rem var(--pa-mono); letter-spacing: .08em; text-transform: uppercase; opacity: .85;
+    }
+    .pa-scanbar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; overflow: hidden; }
+    .pa-scanbar::after {
+      content: ""; position: absolute; top: 0; bottom: 0; width: 35%;
+      background: linear-gradient(90deg, transparent, #fff, transparent);
+      transform: translateX(-100%); opacity: 0;
+    }
+    .pa-panel.pa-busy .pa-scanbar::after { opacity: 1; animation: pa-scan 1.1s linear infinite; }
+
+    .pa-body {
+      flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px;
+      background:
+        linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 32px 32px,
+        linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 32px 32px;
+      scroll-behavior: smooth;
+    }
+
+    .pa-welcome {
+      padding: 16px; border-radius: 18px; background: var(--surface-strong);
+      border: 1px solid var(--line);
+    }
+    .pa-welcome h4 { font-size: 1.02rem; font-weight: 800; margin-bottom: 6px; color: var(--text); }
+    .pa-welcome p { font-size: .9rem; }
+    .pa-missions { display: grid; gap: 8px; margin-top: 14px; }
+    .pa-mission-label {
+      font: 600 .66rem var(--pa-mono); letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); margin-top: 6px;
+    }
+    .pa-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pa-chip {
+      border: 1px solid var(--line); background: var(--primary-soft); color: var(--primary);
+      border-radius: 999px; padding: 7px 11px; cursor: pointer;
+      font: 600 .8rem 'Inter', sans-serif; text-align: left;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .pa-chip:hover { transform: translateY(-1px); border-color: var(--primary); }
+
+    .pa-msg { display: flex; animation: pa-rise .28s ease-out; }
+    .pa-msg.pa-user { justify-content: flex-end; }
+    .pa-bubble {
+      max-width: 88%; padding: 11px 14px; border-radius: 18px; font-size: .92rem; line-height: 1.55;
+      background: var(--surface-strong); border: 1px solid var(--line); color: var(--text);
+      overflow-wrap: anywhere; box-shadow: var(--shadow-soft);
+    }
+    .pa-user .pa-bubble { background: var(--pa-grad); color: #fff; border-color: transparent; border-bottom-right-radius: 6px; }
+    .pa-bot .pa-bubble { border-bottom-left-radius: 6px; }
+    .pa-bubble p { color: inherit; font-size: inherit; margin: 0 0 8px; }
+    .pa-bubble p:last-child, .pa-bubble ul:last-child, .pa-bubble ol:last-child { margin-bottom: 0; }
+    .pa-bubble ul, .pa-bubble ol { margin: 0 0 8px 18px; }
+    .pa-bubble li { margin: 3px 0; }
+    .pa-bubble a { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+    .pa-user .pa-bubble a { color: #fff; }
+    .pa-cite {
+      display: inline-block; vertical-align: super; margin-left: 2px; padding: 1px 4px;
+      font: 700 .62rem var(--pa-mono); line-height: 1.2; border-radius: 4px;
+      background: var(--primary-soft); color: var(--primary) !important; text-decoration: none !important;
+    }
+    .pa-sources { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); display: flex; flex-wrap: wrap; gap: 6px; }
+    .pa-source {
+      display: inline-flex; align-items: center; gap: 5px; max-width: 100%;
+      padding: 4px 8px; border-radius: 8px; font-size: .74rem; font-weight: 600;
+      background: var(--bg-soft); color: var(--muted) !important; border: 1px solid var(--line);
+      text-decoration: none !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    a.pa-source:hover { color: var(--primary) !important; border-color: var(--primary); }
+    .pa-source b { font: 700 .66rem var(--pa-mono); color: var(--primary); }
+    .pa-error .pa-bubble { border-color: #ef4444; }
+    .pa-retry {
+      margin-top: 8px; border: 1px solid var(--line); background: transparent; color: var(--text);
+      border-radius: 999px; padding: 6px 12px; cursor: pointer; font: 600 .8rem 'Inter', sans-serif;
+    }
+    .pa-cta-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .pa-cta {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: 999px;
+      font-size: .78rem; font-weight: 700; text-decoration: none !important;
+      background: var(--text); color: var(--bg) !important;
+    }
+
+    .pa-typing .pa-bubble { display: flex; align-items: center; gap: 10px; }
+    .pa-orbit { position: relative; width: 22px; height: 22px; flex: none; }
+    .pa-orbit::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: var(--primary); }
+    .pa-orbit::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid transparent; border-top-color: var(--accent);
+      animation: pa-spin .9s linear infinite;
+    }
+    .pa-typing-text { font: 500 .78rem var(--pa-mono); color: var(--muted); }
+
+    .pa-foot { flex: none; padding: 12px 14px 10px; border-top: 1px solid var(--line); background: var(--surface-strong); }
+    .pa-form {
+      display: flex; align-items: flex-end; gap: 8px; padding: 6px 6px 6px 14px;
+      border: 1px solid var(--line); border-radius: 18px; background: var(--bg-soft);
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .pa-form:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+    .pa-panel .pa-form textarea {
+      flex: 1; min-height: 24px; max-height: 120px; padding: 8px 0; margin: 0;
+      border: 0; border-radius: 0; background: transparent; box-shadow: none !important;
+      resize: none; font: 400 .94rem/1.45 'Inter', sans-serif; color: var(--text);
+    }
+    .pa-send {
+      width: 40px; height: 40px; flex: none; border-radius: 13px; border: 0; cursor: pointer;
+      background: var(--pa-grad); color: #fff; display: grid; place-items: center;
+      transition: transform .15s ease, opacity .2s ease;
+    }
+    .pa-send:hover { transform: scale(1.06); }
+    .pa-send:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .pa-send svg { width: 18px; height: 18px; }
+    .pa-foot-meta {
+      display: flex; justify-content: space-between; gap: 8px; margin-top: 8px;
+      font-size: .7rem; color: var(--muted);
+    }
+    .pa-foot-meta kbd { font: 600 .66rem var(--pa-mono); padding: 1px 5px; border-radius: 5px; border: 1px solid var(--line); }
+
+    .pa-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .pa-panel .pa-form textarea:focus,
+    .pa-panel .pa-form textarea:focus-visible { outline: none; border: 0; box-shadow: none; }
+    .pa-status-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Existing-site fix: dark buttons were white text on a near-white background in dark mode */
+    body.dark .btn-primary,
+    body.dark .filter-btn.active,
+    body.dark .filter-btn:hover { color: var(--bg); }
+
+    .pa-panel :focus-visible, .pa-launcher:focus-visible, .pa-card-ask:focus-visible, .btn-ai:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 2px;
+    }
+
+    @keyframes pa-ring { 0% { transform: scale(1); opacity: .7; } 100% { transform: scale(1.75); opacity: 0; } }
+    @keyframes pa-spin { to { transform: rotate(360deg); } }
+    @keyframes pa-ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent); } 100% { box-shadow: 0 0 0 9px transparent; } }
+    @keyframes pa-sheen { 0%, 60% { transform: translateX(-120%); } 85%, 100% { transform: translateX(120%); } }
+    @keyframes pa-scan { to { transform: translateX(300%); } }
+    @keyframes pa-blink { 50% { opacity: .25; } }
+    @keyframes pa-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    @keyframes pa-pop { from { opacity: 0; transform: translate(-50%, -80%) scale(.9); } }
+    @keyframes pa-drift { from { transform: translateX(-12px); } to { transform: translateX(12px); } }
+
+    @media (max-width: 560px) {
+      .pa-launcher { right: 16px; bottom: 16px; width: 58px; height: 58px; }
+      .pa-teaser { right: 84px; bottom: 24px; max-width: 200px; }
+      .pa-panel, .pa-panel.pa-wide {
+        right: 0; bottom: 0; width: 100vw; height: 100dvh; border-radius: 0;
+        transform-origin: 100% 100%;
+      }
+      .pa-expand { display: none !important; }
+      .cta-row .btn-ai .pa-kbd { display: none; }
+      .pa-foot-meta span:last-child { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pa-launcher::before, .pa-launcher::after, .pa-sweep, .pa-contours path,
+      .btn-ai::after, .nav-links a.pa-nav-ai::before { animation: none !important; }
+      .pa-panel { transition: opacity .15s ease, visibility 0s; transform: none; }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav">
-      <a href="#home" class="brand">
-        <strong>Powell Andile Ndlovu</strong>
-        <span>GeoAI Specialist | GIS, Remote Sensing & Machine Learning</span>
+      <a href="#home" class="brand brand-with-logo">
+        <span class="brand-logo">
+          <span class="brand-initials" aria-hidden="true">PN</span>
+          <img src="powell.jpg" alt="Powell Andile Ndlovu" width="52" height="52" onerror="this.remove()">
+        </span>
+        <span class="brand-text">
+          <strong>Powell Andile Ndlovu</strong>
+          <span>GeoAI Specialist | GIS, Remote Sensing & Machine Learning</span>
+        </span>
       </a>
 
       <nav class="nav-links" id="navLinks">
@@ -759,6 +1126,7 @@
         <a href="#skills">Skills</a>
         <a href="#impact">Impact</a>
         <a href="#contact">Contact</a>
+        <a href="#ask-ai" class="pa-nav-ai" data-pa-open>Ask AI</a>
       </nav>
 
       <div class="nav-actions">
@@ -779,6 +1147,7 @@
             <p class="hero-copy">I design analytical systems that combine geospatial intelligence, environmental modelling, and machine learning to reveal patterns, quantify risk, and support better strategic decisions.</p>
             <div class="cta-row">
               <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+              <button type="button" class="btn btn-ai" data-pa-open>✦ Ask my AI assistant <span class="pa-kbd">/</span></button>
               <a href="#contact" class="btn btn-secondary">Contact</a>
               <a href="https://github.com/kabila96" target="_blank" rel="noopener" class="btn btn-outline">GitHub</a>
             </div>
@@ -1398,6 +1767,438 @@
     sections.forEach(section => sectionObserver.observe(section));
 
     document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- ===== GeoAI Assistant widget (backend: Render) ===== -->
+  <script>
+  /* =====================================================================
+     GeoAI ASSISTANT — embedded chat widget
+     Talks to the Flask/RAG backend on Render. No API keys live here.
+     Entry points: floating radar button, nav link, hero button,
+     "Ask AI" on every project card, highlight-any-text-to-ask, and the "/" key.
+     ===================================================================== */
+  (() => {
+    "use strict";
+
+    const API_BASE = "https://powell-geoai-chatbot.onrender.com";
+    const CONTACT_EMAIL = "powellndlovu@gmail.com";
+    const STORE_KEY = "pa-geoai-chat-v1";
+    const MAX_CHARS = 1000;
+    const MAX_HISTORY = 12;
+
+    let history = load();
+    let busy = false;
+    let health = "unknown"; // unknown | waking | online | offline
+    let healthPromise = null;
+    let lastQuestion = "";
+
+    /* ------------------------------------------------------------ helpers */
+    function load() {
+      try { const v = JSON.parse(sessionStorage.getItem(STORE_KEY) || "[]"); return Array.isArray(v) ? v : []; }
+      catch { return []; }
+    }
+    function save() { try { sessionStorage.setItem(STORE_KEY, JSON.stringify(history.slice(-30))); } catch {} }
+    const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const $ = (sel, root = document) => root.querySelector(sel);
+
+    function md(text) {
+      const inline = (line) => {
+        let h = esc(line);
+        h = h.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        h = h.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+        h = h.replace(/(^|[\s(])(https?:\/\/[^\s<)]+[^\s<).,;:!?])/g, '$1<a href="$2" target="_blank" rel="noopener noreferrer">$2</a>');
+        h = h.replace(/\[S(\d{1,2})\]/g, '<span class="pa-cite" title="Source $1">S$1</span>');
+        return h;
+      };
+      const out = []; let list = null;
+      const close = () => { if (list) { out.push(`</${list}>`); list = null; } };
+      for (const raw of String(text).split("\n")) {
+        const line = raw.trim();
+        const b = line.match(/^[-*•]\s+(.*)$/), n = line.match(/^\d+[.)]\s+(.*)$/);
+        if (b || n) {
+          const t = b ? "ul" : "ol";
+          if (list !== t) { close(); out.push(`<${t}>`); list = t; }
+          out.push(`<li>${inline((b || n)[1])}</li>`);
+        } else if (!line) close();
+        else { close(); const hd = line.match(/^#{1,4}\s+(.*)$/); out.push(`<p>${hd ? `<strong>${inline(hd[1])}</strong>` : inline(line)}</p>`); }
+      }
+      close();
+      return out.join("");
+    }
+
+    /* ------------------------------------------------------------ build the widget */
+    const contourPaths = Array.from({ length: 7 }, (_, i) => {
+      const y = 12 + i * 16, a = 6 + (i % 3) * 4;
+      return `<path d="M-20 ${y} C 60 ${y - a}, 120 ${y + a}, 200 ${y} S 340 ${y - a}, 440 ${y}" fill="none" stroke="#fff" stroke-width="1"/>`;
+    }).join("");
+
+    const launcher = document.createElement("button");
+    launcher.className = "pa-launcher";
+    launcher.type = "button";
+    launcher.setAttribute("aria-label", "Open Powell's GeoAI assistant");
+    launcher.setAttribute("aria-expanded", "false");
+    launcher.setAttribute("aria-controls", "pa-panel");
+    launcher.innerHTML = `
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".9"/>
+        <circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" stroke-width="1.2" opacity=".55"/>
+        <path d="M4 20h32M20 4v32" stroke="currentColor" stroke-width=".9" opacity=".35"/>
+        <g class="pa-sweep"><path d="M20 20 L20 4 A16 16 0 0 1 33 11 Z" fill="currentColor" opacity=".35"/></g>
+        <circle cx="27" cy="13" r="2.2" fill="currentColor"/>
+        <circle cx="12" cy="25" r="1.6" fill="currentColor" opacity=".8"/>
+      </svg>
+      <span class="pa-launcher-badge">AI</span>`;
+
+    const teaser = document.createElement("div");
+    teaser.className = "pa-teaser";
+    teaser.setAttribute("role", "status");
+    teaser.innerHTML = `<button class="pa-teaser-x" type="button" aria-label="Dismiss">×</button>
+      Hi! I'm Powell's <strong>GeoAI assistant</strong>. Ask me about his projects, skills or how to hire him.`;
+
+    const panel = document.createElement("section");
+    panel.className = "pa-panel";
+    panel.id = "pa-panel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "GeoAI assistant chat");
+    panel.innerHTML = `
+      <header class="pa-head">
+        <svg class="pa-contours" viewBox="0 0 420 130" preserveAspectRatio="none" aria-hidden="true">${contourPaths}</svg>
+        <div class="pa-head-row">
+          <div class="pa-avatar" aria-hidden="true">
+            <img src="powell.jpg" alt="" onerror="this.remove()">
+            <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="#fff" stroke-width="1.6"/>
+              <ellipse cx="20" cy="20" rx="6" ry="14" fill="none" stroke="#fff" stroke-width="1.2" opacity=".8"/>
+              <path d="M6 20h28M8.5 13h23M8.5 27h23" stroke="#fff" stroke-width="1" opacity=".6"/></svg>
+          </div>
+          <div class="pa-title">
+            <strong>GeoAI Assistant</strong>
+            <span class="pa-status" data-state="unknown"><i></i><span class="pa-status-text">Ready to connect</span></span>
+          </div>
+          <button class="pa-icon-btn pa-new" type="button" title="New conversation" aria-label="New conversation">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>
+          <button class="pa-icon-btn pa-expand" type="button" title="Expand" aria-label="Expand chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+          <button class="pa-icon-btn pa-close" type="button" title="Close (Esc)" aria-label="Close chat">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <div class="pa-hud" aria-hidden="true"><span>Layer: Portfolio + Profile</span><span class="pa-clock">--:--:-- UTC</span></div>
+        <div class="pa-scanbar" aria-hidden="true"></div>
+      </header>
+      <div class="pa-body" role="log" aria-live="polite"></div>
+      <footer class="pa-foot">
+        <form class="pa-form">
+          <label class="pa-sr" for="pa-input">Ask the GeoAI assistant</label>
+          <textarea id="pa-input" rows="1" maxlength="${MAX_CHARS}" placeholder="Ask about projects, skills, services…"></textarea>
+          <button class="pa-send" type="submit" aria-label="Send">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11.5 21 3l-8.5 18-2-7.5z"/></svg></button>
+        </form>
+        <div class="pa-foot-meta"><span>Answers cite Powell's profile &amp; portfolio</span><span><kbd>/</kbd> open · <kbd>Esc</kbd> close</span></div>
+      </footer>`;
+
+    document.body.append(teaser, panel, launcher);
+
+    const bodyEl = $(".pa-body", panel);
+    const input = $("#pa-input", panel);
+    const form = $(".pa-form", panel);
+    const sendBtn = $(".pa-send", panel);
+    const statusEl = $(".pa-status", panel);
+    const statusText = $(".pa-status-text", panel);
+
+    /* ------------------------------------------------------------ welcome screen */
+    const MISSIONS = [
+      ["Explore projects", [
+        "Which GeoAI and GIS projects has Powell built?",
+        "Tell me about the London urban heat island dashboard",
+        "What machine learning apps are in the portfolio?",
+      ]],
+      ["Skills & credentials", [
+        "What are Powell's qualifications?",
+        "Which remote sensing tools does he use?",
+      ]],
+      ["Work with Powell", [
+        "What consulting services do you offer?",
+        "Can you build a dashboard or chatbot for my organisation?",
+        "How are prices and timelines agreed?",
+      ]],
+    ];
+
+    function renderWelcome() {
+      const wrap = document.createElement("div");
+      wrap.className = "pa-welcome";
+      wrap.innerHTML = `<h4>Interrogate the portfolio.</h4>
+        <p>I answer from Powell's consultancy profile, CV and portfolio sites, and I show my sources. Pick a mission or ask your own question.</p>
+        <div class="pa-missions">${MISSIONS.map(([label, qs]) =>
+          `<div class="pa-mission-label">${esc(label)}</div><div class="pa-chips">${qs.map((q) =>
+            `<button type="button" class="pa-chip">${esc(q)}</button>`).join("")}</div>`).join("")}</div>`;
+      wrap.addEventListener("click", (e) => { const c = e.target.closest(".pa-chip"); if (c) ask(c.textContent); });
+      bodyEl.appendChild(wrap);
+    }
+
+    function needsCTA(text) { return /quot|consult|contact|pric|cost|fee|budget|timeline|availab|hire|get in touch/i.test(text); }
+
+    function addMsg(role, text, opts = {}) {
+      const row = document.createElement("div");
+      row.className = `pa-msg ${role === "user" ? "pa-user" : "pa-bot"}${opts.error ? " pa-error" : ""}`;
+      const bubble = document.createElement("div");
+      bubble.className = "pa-bubble";
+      if (role === "user") bubble.textContent = text;
+      else {
+        bubble.innerHTML = md(text);
+        const sources = opts.sources || [];
+        if (sources.length) {
+          bubble.insertAdjacentHTML("beforeend", `<div class="pa-sources">${sources.map((s) => {
+            const label = esc(s.type === "document" ? "Consultancy profile" : s.title) + (s.section ? ` · ${esc(s.section)}` : "");
+            return /^https?:\/\//.test(s.url)
+              ? `<a class="pa-source" href="${esc(s.url)}" target="_blank" rel="noopener" title="${label}"><b>${esc(s.id)}</b>${label}</a>`
+              : `<span class="pa-source" title="${label}"><b>${esc(s.id)}</b>${label}</span>`;
+          }).join("")}</div>`);
+        }
+        if (opts.cta) {
+          const subject = encodeURIComponent("Consultation enquiry from your portfolio");
+          const bodyTxt = encodeURIComponent(`Hi Powell,\n\nI was chatting with your GeoAI assistant about: "${opts.cta}"\n\n`);
+          bubble.insertAdjacentHTML("beforeend", `<div class="pa-cta-row">
+            <a class="pa-cta" href="mailto:${CONTACT_EMAIL}?subject=${subject}&body=${bodyTxt}">✉ Email Powell</a>
+            <a class="pa-cta pa-to-form" href="#contact">→ Send via contact form</a></div>`);
+          const toForm = bubble.querySelector(".pa-to-form");
+          toForm.addEventListener("click", (e) => { e.preventDefault(); handOffToForm(opts.cta); });
+        }
+      }
+      if (opts.retry) {
+        const b = document.createElement("button");
+        b.className = "pa-retry"; b.type = "button"; b.textContent = "Try again";
+        b.addEventListener("click", () => { row.remove(); ask(opts.retry, true); });
+        bubble.appendChild(b);
+      }
+      row.appendChild(bubble);
+      bodyEl.appendChild(row);
+      bodyEl.scrollTop = bodyEl.scrollHeight;
+      return row;
+    }
+
+    const THINKING = ["Scanning profile layers…", "Querying the portfolio index…", "Cross-checking sources…", "Composing a grounded answer…"];
+    function showTyping() {
+      const row = document.createElement("div");
+      row.className = "pa-msg pa-bot pa-typing";
+      row.innerHTML = `<div class="pa-bubble"><span class="pa-orbit"></span><span class="pa-typing-text">${THINKING[0]}</span></div>`;
+      bodyEl.appendChild(row);
+      bodyEl.scrollTop = bodyEl.scrollHeight;
+      let i = 0;
+      const label = row.querySelector(".pa-typing-text");
+      const timer = setInterval(() => {
+        i += 1;
+        label.textContent = health === "waking" ? "Waking the server (free tier, up to a minute)…" : THINKING[i % THINKING.length];
+      }, 1600);
+      return () => { clearInterval(timer); row.remove(); };
+    }
+
+    /* ------------------------------------------------------------ server status (Render free tier sleeps) */
+    function setStatus(state, text) {
+      health = state;
+      statusEl.dataset.state = state;
+      statusText.textContent = text;
+    }
+
+    function warmUp() {
+      if (health === "online") return Promise.resolve(true);
+      if (healthPromise) return healthPromise;
+      const slow = setTimeout(() => { if (health !== "online") setStatus("waking", "Waking server · ~30–60s"); }, 2500);
+      setStatus("waking", "Connecting…");
+      const ctrl = new AbortController();
+      const kill = setTimeout(() => ctrl.abort(), 75000);
+      healthPromise = fetch(`${API_BASE}/api/health`, { signal: ctrl.signal })
+        .then((r) => r.json())
+        .then((d) => {
+          setStatus(d.knowledge_base_ready ? "online" : "offline",
+            d.knowledge_base_ready ? "Online · ready" : "Knowledge base not ready");
+          return d.knowledge_base_ready;
+        })
+        .catch(() => { setStatus("offline", "Offline · use the contact form"); return false; })
+        .finally(() => { clearTimeout(slow); clearTimeout(kill); healthPromise = null; });
+      return healthPromise;
+    }
+
+    /* ------------------------------------------------------------ asking */
+    async function ask(raw, isRetry = false) {
+      const q = String(raw || "").trim().slice(0, MAX_CHARS);
+      if (!q || busy) return;
+      openPanel();
+      busy = true; sendBtn.disabled = true; panel.classList.add("pa-busy");
+      $(".pa-welcome", panel)?.remove();
+
+      const prior = history.slice(-MAX_HISTORY).map(({ role, content }) => ({ role, content }));
+      if (!isRetry) { addMsg("user", q); history.push({ role: "user", content: q }); save(); }
+      lastQuestion = q;
+      const stopTyping = showTyping();
+
+      try {
+        if (health !== "online") await warmUp();
+        const ctrl = new AbortController();
+        const kill = setTimeout(() => ctrl.abort(), 90000);
+        const res = await fetch(`${API_BASE}/api/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: q, history: isRetry ? prior.slice(0, -1) : prior }),
+          signal: ctrl.signal,
+        });
+        clearTimeout(kill);
+        let data = {};
+        try { data = await res.json(); } catch {}
+        if (!res.ok) throw new Error(data.error || `The assistant returned an error (${res.status}).`);
+        if (health !== "online") setStatus("online", "Online");
+        stopTyping();
+        const cta = needsCTA(q) || needsCTA(data.answer) ? q : null;
+        addMsg("bot", data.answer, { sources: data.sources, cta });
+        history.push({ role: "assistant", content: data.answer, sources: data.sources, cta });
+        save();
+      } catch (err) {
+        stopTyping();
+        const msg = err.name === "AbortError"
+          ? "That took too long. The server may still be waking up, so please try again."
+          : err instanceof TypeError
+            ? `I couldn't reach the assistant right now. You can still email Powell at ${CONTACT_EMAIL} or use the contact form below.`
+            : err.message;
+        if (err instanceof TypeError) setStatus("offline", "Offline · use the contact form");
+        addMsg("bot", msg, { error: true, retry: q });
+      } finally {
+        busy = false; sendBtn.disabled = false; panel.classList.remove("pa-busy");
+        input.focus({ preventScroll: true });
+      }
+    }
+
+    /* Hand the conversation to the page's Formspree contact form */
+    function handOffToForm(question) {
+      const msg = document.getElementById("message");
+      if (msg && !msg.value.trim()) {
+        msg.value = `Hi Powell, I'd like to discuss: ${question}\n\n(Sent after chatting with your GeoAI assistant.)`;
+      }
+      if (window.innerWidth < 560) closePanel();
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => document.getElementById("name")?.focus({ preventScroll: true }), 700);
+    }
+
+    /* ------------------------------------------------------------ open / close */
+    let lastFocus = null;
+    function openPanel() {
+      if (panel.classList.contains("pa-open")) return;
+      lastFocus = document.activeElement;
+      hideTeaser(true);
+      panel.classList.add("pa-open");
+      launcher.setAttribute("aria-expanded", "true");
+      launcher.setAttribute("aria-label", "Close Powell's GeoAI assistant");
+      setTimeout(() => input.focus({ preventScroll: true }), 120);
+      warmUp();
+    }
+    function closePanel() {
+      panel.classList.remove("pa-open");
+      launcher.setAttribute("aria-expanded", "false");
+      launcher.setAttribute("aria-label", "Open Powell's GeoAI assistant");
+      if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+    }
+    const toggle = () => (panel.classList.contains("pa-open") ? closePanel() : openPanel());
+
+    launcher.addEventListener("click", toggle);
+    $(".pa-close", panel).addEventListener("click", closePanel);
+    $(".pa-expand", panel).addEventListener("click", () => panel.classList.toggle("pa-wide"));
+    $(".pa-new", panel).addEventListener("click", () => {
+      history = []; save(); bodyEl.innerHTML = ""; renderWelcome(); input.focus();
+    });
+
+    form.addEventListener("submit", (e) => { e.preventDefault(); const v = input.value; input.value = ""; grow(); ask(v); });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
+    });
+    const grow = () => { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 120) + "px"; };
+    input.addEventListener("input", grow);
+
+    document.querySelectorAll("[data-pa-open]").forEach((el) =>
+      el.addEventListener("click", (e) => { e.preventDefault(); openPanel(); }));
+
+    document.addEventListener("keydown", (e) => {
+      const t = e.target;
+      const typing = t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+      if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey) { e.preventDefault(); openPanel(); }
+      if (e.key === "Escape" && panel.classList.contains("pa-open")) closePanel();
+    });
+
+    /* ------------------------------------------------------------ "Ask AI" on each project card */
+    document.querySelectorAll(".project-card").forEach((card) => {
+      const thumb = card.querySelector(".project-thumb");
+      const title = card.querySelector("h3")?.textContent.trim();
+      if (!thumb || !title) return;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "pa-card-ask";
+      b.innerHTML = "✦ Ask AI";
+      b.setAttribute("aria-label", `Ask the AI assistant about ${title}`);
+      b.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        ask(`Tell me about Powell's "${title}" project: what problem does it solve and which methods and tools does it use?`);
+      });
+      thumb.appendChild(b);
+    });
+
+    /* ------------------------------------------------------------ highlight any text → ask */
+    const selBtn = document.createElement("button");
+    selBtn.type = "button";
+    selBtn.className = "pa-select-ask";
+    selBtn.textContent = "✦ Ask AI about this";
+    let selText = "";
+    selBtn.addEventListener("mousedown", (e) => e.preventDefault());
+    selBtn.addEventListener("click", () => {
+      const t = selText; hideSel(); window.getSelection()?.removeAllRanges();
+      ask(`Explain "${t}" in the context of Powell's work and services.`);
+    });
+    function hideSel() { selBtn.remove(); selText = ""; }
+    document.addEventListener("mouseup", (e) => {
+      if (e.target === selBtn) return;
+      setTimeout(() => {
+        const sel = window.getSelection();
+        const text = sel ? sel.toString().replace(/\s+/g, " ").trim() : "";
+        const node = sel && sel.anchorNode ? (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement) : null;
+        if (!text || text.length < 4 || text.length > 160 || !node || node.closest(".pa-panel, input, textarea, form")) { hideSel(); return; }
+        const rect = sel.getRangeAt(0).getBoundingClientRect();
+        if (!rect.width) { hideSel(); return; }
+        selText = text;
+        selBtn.style.left = `${rect.left + rect.width / 2 + window.scrollX}px`;
+        selBtn.style.top = `${rect.top + window.scrollY - 10}px`;
+        document.body.appendChild(selBtn);
+      }, 10);
+    });
+    document.addEventListener("scroll", () => { if (selBtn.isConnected && !window.getSelection()?.toString()) hideSel(); }, { passive: true });
+
+    /* ------------------------------------------------------------ teaser + live UTC clock */
+    let teaserSeen = false;
+    try { teaserSeen = sessionStorage.getItem("pa-teaser") === "1"; } catch {}
+    function hideTeaser(remember) {
+      teaser.classList.remove("pa-show");
+      if (remember) { try { sessionStorage.setItem("pa-teaser", "1"); } catch {} }
+    }
+    if (!teaserSeen) {
+      setTimeout(() => { if (!panel.classList.contains("pa-open")) teaser.classList.add("pa-show"); }, 6000);
+      setTimeout(() => hideTeaser(false), 20000);
+    }
+    teaser.addEventListener("click", (e) => {
+      if (e.target.closest(".pa-teaser-x")) { hideTeaser(true); return; }
+      openPanel();
+    });
+
+    const clock = $(".pa-clock", panel);
+    setInterval(() => {
+      if (panel.classList.contains("pa-open")) clock.textContent = new Date().toISOString().slice(11, 19) + " UTC";
+    }, 1000);
+
+    /* Wake the free Render server quietly after the visitor first interacts,
+       so the first answer is fast by the time they open the chat. */
+    const prewarm = () => { warmUp(); ["scroll", "pointermove", "touchstart", "keydown"].forEach((ev) => window.removeEventListener(ev, prewarm)); };
+    ["scroll", "pointermove", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, prewarm, { once: true, passive: true }));
+
+    /* ------------------------------------------------------------ restore session */
+    if (history.length) {
+      history.forEach((m) => addMsg(m.role, m.content, { sources: m.sources || [], cta: m.cta || null }));
+    } else {
+      renderWelcome();
+    }
+  })();
   </script>
 </body>
 </html>
